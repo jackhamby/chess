@@ -18,9 +18,6 @@ class Pawn(Piece):
 
 
     def check_move(self, tile):
-        
-        column, row = list(self.current_tile.id)
-        available_moves = []
 
         direction = -1 if self.player.team == 2 else 1
 

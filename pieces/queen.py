@@ -16,7 +16,6 @@ class Queen(Piece):
 
     def check_move(self, tile):
 
-        available_moves = []
 
         # Above
         y = self.y - 1

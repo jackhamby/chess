@@ -14,17 +14,16 @@ class Rook():
     
     def check_move(self, tile):
         
-        column, row = list(self.current_tile.id)
-        available_moves = []
-
         # Above
         y = self.y - 1
         while (y >= 0):
             above_tile = self.current_tile.board.board[y][self.x]
             if (above_tile and not above_tile.piece):
-                available_moves.append((self.x, y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
             elif (above_tile and above_tile.piece and above_tile.piece.player.team != self.player.team):
-                available_moves.append((self.x, y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
                 break
             else: 
                 break
@@ -35,9 +34,11 @@ class Rook():
         while (y < 8):
             above_tile = self.current_tile.board.board[y][self.x]
             if (above_tile and not above_tile.piece):
-                available_moves.append((self.x, y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
             elif (above_tile and above_tile.piece and above_tile.piece.player.team != self.player.team):
-                available_moves.append((self.x, y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
                 break
             else: 
                 break
@@ -48,9 +49,11 @@ class Rook():
         while (x >= 0):
             above_tile = self.current_tile.board.board[self.y][x]
             if (above_tile and not above_tile.piece):
-                available_moves.append((x, self.y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
             elif(above_tile and above_tile.piece and above_tile.piece.player.team != self.player.team):
-                available_moves.append((x, self.y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
                 break
             else:
                 break
@@ -61,17 +64,15 @@ class Rook():
         while (x < 8):
             above_tile = self.current_tile.board.board[self.y][x]
             if (above_tile and not above_tile.piece):
-                available_moves.append((x, self.y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
             elif(above_tile and above_tile.piece and above_tile.piece.player.team != self.player.team):
-                available_moves.append((x, self.y))
+                if ((above_tile.x, above_tile.y) == (tile.x, tile.y)):
+                    return True
                 break
             else:
                 break
             x += 1
-
-
-        if ((tile.x, tile.y) in available_moves):
-            return True
 
 
         return False

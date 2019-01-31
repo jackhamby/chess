@@ -8,11 +8,12 @@ class Server():
         self.host_ip = "127.0.0.1"
         self.port = port
         self.listener.bind((self.host_ip, self.port))
+        print(f'waiting for player2 at {self.host_ip}:{self.port}' )
+
 
         
     def run(self):
         
-        print(f'waiting at {self.host_ip}:{self.port}' )
         while(True):
             data = self.listener.recvfrom(32)
             print(data)

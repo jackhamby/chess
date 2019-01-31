@@ -1,5 +1,5 @@
 from pieces import Pawn, Rook, Knight, Bishop, Queen, King
-
+from network import Client, Server
 
 class Player():
 
@@ -7,19 +7,8 @@ class Player():
         self.team = team
         self.game = game
         self.pieces = []
-        # self.pawns = []
-        # self.rooks = []
-        # self.bishops = []
-        # self.knights = []
-        # self.king = None
-        # self.queen = None
         self.selected_piece = None
-        
-    # @property
-    # def pieces(self):
-    #     return self.pawns + self.rooks
-        # return [].extend(self.pawns + self.rooks + self.bishops + self.knights + [self.king] + [self.queen])
-        
+
     def setup(self):
         if (self.team == 1):
             self.pieces.append(Rook(self.game.board.board[0][0], self))
@@ -50,7 +39,6 @@ class Player():
             del opponent.pieces[opponent.pieces.index(piece)]
 
     def move_piece(self, tile):
-        self.game.going_player = self.game.player1 if self.team == 2 else self.game.player2
         # Kill piece
         if (tile.piece):
             self.attack_piece(tile.piece)
@@ -68,6 +56,7 @@ class Player():
             self.selected_piece.x_pos = self.selected_piece.current_tile.x_pos
             self.selected_piece.y_pos = self.selected_piece.current_tile.y_pos
 
+ 
 
 
 

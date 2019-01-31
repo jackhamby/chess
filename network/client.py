@@ -11,10 +11,10 @@ class Client():
 
     def run(self):
         try:
-            # print(self.conn)
-            # print(f'sending connect request to {self.addr}:{self.server_port} ' )
+            print(f'sending connect to player1 at {self.addr}:{self.server_port} ' )
             self.conn.sendto(b'c', (self.addr, self.server_port))
-            while (True):
+            # while (True):
+            #     pass
                 
 
         except Exception as e: 

@@ -16,42 +16,39 @@ class King(Piece):
 
     def check_move(self, tile):
         
-        available_moves = []
-
         # Check 3 on right
-        if (self.check_tile(self.x - 1, self.y - 1)):
-            available_moves.append((self.x - 1, self.y - 1))
-        if (self.check_tile(self.x - 1, self.y)):
-            available_moves.append((self.x - 1, self.y))
-        if (self.check_tile(self.x - 1, self.y + 1)):
-            available_moves.append((self.x - 1, self.y + 1))
+        if (self.check_tile(self.x - 1, self.y - 1, tile)):
+            return True
+        if (self.check_tile(self.x - 1, self.y, tile)):
+            return True
+        if (self.check_tile(self.x - 1, self.y + 1, tile)):
+            return True
 
         # Check 3 on left
-        if (self.check_tile(self.x + 1, self.y - 1)):
-            available_moves.append((self.x + 1, self.y - 1))
-        if (self.check_tile(self.x + 1, self.y)):
-            available_moves.append((self.x + 1, self.y))
-        if (self.check_tile(self.x + 1, self.y + 1)):
-            available_moves.append((self.x + 1, self.y + 1))
+        if (self.check_tile(self.x + 1, self.y - 1, tile)):
+            return True
+        if (self.check_tile(self.x + 1, self.y, tile)):
+            return True
+        if (self.check_tile(self.x + 1, self.y + 1, tile)):
+            return True
         
         # Remaining 2
-        if (self.check_tile(self.x, self.y + 1)):
-            available_moves.append((self.x, self.y + 1))
-        if (self.check_tile(self.x, self.y - 1)):
-            available_moves.append((self.x, self.y - 1))
-
-        if ( (tile.x, tile.y) in available_moves):
+        if (self.check_tile(self.x, self.y + 1, tile)):
+            return True
+        if (self.check_tile(self.x, self.y - 1, tile)):
             return True
 
         return False
     
-    def check_tile(self, x, y):
+    def check_tile(self, x, y, f_tile):
         if (x < 0 or x >= 8 or y < 0 or y >= 8):
             return False
         else:
             tile = self.current_tile.board.board[y][x]
             if (tile and not tile.piece):
-                return True
+                if ((tile.x, tile.y) == (f_tile.x, f_tile.y)):
+                    return True
             elif (tile and tile.piece and tile.piece.player.team != self.player.team):
-                return True
-            return False
+                if ((tile.x, tile.y) == (f_tile.x, f_tile.y)):
+                    return True
+        return False

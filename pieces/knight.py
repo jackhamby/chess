@@ -14,22 +14,18 @@ class Knight(Piece):
     
     def check_move(self, tile):
 
-        available_moves = []
-
         # Check above-right
         if (self.y - 2 >= 0 and self.x + 1 < 8):
             c_tile = self.current_tile.board.board[self.y - 2][self.x + 1]
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
         # Check above-left 
         if (self.y - 2 >= 0 and self.x - 1 >= 0):
             c_tile = self.current_tile.board.board[self.y - 2][self.x - 1]
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
 
         # Check below-right
         if (self.y + 2 < 8 and self.x + 1 < 8):
@@ -37,14 +33,12 @@ class Knight(Piece):
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
         # Check below-left
         if (self.y + 2 < 8 and self.x - 1 >= 0):
             c_tile = self.current_tile.board.board[self.y + 2][self.x - 1]
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
 
         # Check right-above
         if (self.x + 2 < 8 and self.y - 1 >= 0):
@@ -52,14 +46,12 @@ class Knight(Piece):
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
         # Check right-below
         if (self.x + 2 < 8 and self.y + 1 < 8):
             c_tile = self.current_tile.board.board[self.y + 1][self.x + 2]
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
 
         # Check left-above
         if (self.x - 2 >= 0 and self.y - 1 >= 0):
@@ -67,18 +59,14 @@ class Knight(Piece):
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
         # Check left-below
         if (self.x - 2 >= 0 and self.y + 1 < 8):
             c_tile = self.current_tile.board.board[self.y + 1][self.x - 2]
             if (self.check_tile(c_tile)):
                 if ((c_tile.x, c_tile.y) == (tile.x, tile.y)):
                     return True
-                # available_moves.append(self.check_tile(c_tile))
 
 
-        # if ((tile.x, tile.y) in available_moves):
-        #     return True
         return False
         
 

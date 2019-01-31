@@ -6,6 +6,11 @@ brown = 160,82,45
 
 size = width, height = 600, 600
 
+default_host_port = 9009
+default_host_ip = "127.0.0.1"
+default_client_port = 8001
+default_client_ip = "127.0.0.1"
+
 pawn_icon_1 = pygame.transform.scale( pygame.image.load("images/pawn1.png"), (math.floor(width/8), math.floor(width/8)))
 pawn_icon_2 = pygame.transform.scale(pygame.image.load("images/pawn2.png"), (math.floor(width/8), math.floor(width/8)))
 
