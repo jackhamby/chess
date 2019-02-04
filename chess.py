@@ -8,32 +8,24 @@ from game.settings import size
 # - Win condition
 
 game_types = ["client", "server"]
-# game_type = "network"
 
-def run(is_network=False, is_host=False):
+def run(is_network=False):
     pygame.init()
     screen = pygame.display.set_mode(size)
     if (is_network):
-        game = NetworkGame(screen, is_host)
-        # game.start()
+        game = NetworkGame(screen)
     else:
         game = Game(screen)
     game.start()
 
 if __name__ == "__main__":
-    # game_type = sys.argv[2]
-    # print(sys.argv[1])
     if (len(sys.argv) >= 2):
-        if (sys.argv[1] == "host"):
-            # print('hosting')
-            run(True, True)
-        elif (sys.argv[1] == "join"):
-            # print('jpining')
+        if (sys.argv[1] == "network"):
             run(True)
         else:
             print('invalid input, please try one of the following:')
             print('$ python3 chess.py')
-            print('$ python3 chess.py host')
-            print('$ python3 chess.py join')
+            print('$ python3 chess.py network')
     else:
+
         run()

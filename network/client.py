@@ -1,31 +1,55 @@
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
+from threading import Thread
+
+
+ADDR = "127.0.0.1"
+PORT = 8001
 
 class Client():
 
-    def __init__(self, addr="127.0.0.1", server_port=9009):
-        self.port = 8001
-        self.conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.conn.bind(("127.0.0.1", self.port))
-        self.addr = addr
+    def __init__(self, server_addr=ADDR, server_port=PORT):
+        self.server_addr = server_addr
         self.server_port = server_port
+        self.connection = socket(AF_INET, SOCK_STREAM)
+        self.connection.connect((self.server_addr, self.server_port))
+        
+        self.last_message = None
 
-    def run(self):
+    def start(self):  
+        recieving_thread = Thread(target=self.recieve)
+        recieving_thread.start()
+
+        recieving_thread.join() # Wait for thread to exit
+        self.stop()
+
+    def stop(self):
+        self.connection.close()
+
+    def recieve(self):
+        while (True):
+            try:
+                msg = self.connection.recv(32)
+                self.last_message = msg.decode("utf-8")
+                print(msg)
+            except:
+                print('connection broken')
+                break
+
+    def send(self, msg):
         try:
-            print(f'sending connect to player1 at {self.addr}:{self.server_port} ' )
-            self.conn.sendto(b'c', (self.addr, self.server_port))
-            # while (True):
-            #     pass
-                
-
-        except Exception as e: 
-            print(e)
-            print('failed to connect')
-        # while(True):
-
-                
+            self.connection.send(bytes(msg, "utf-8"))
+        except:
+            print('connection broken')
+            
 
 
 
-if __name__ == "__main__":
-    client = Client()
-    client.run()
+
+
+
+
+
+
+
+
+
