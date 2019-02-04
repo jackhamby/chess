@@ -7,9 +7,14 @@ from game.settings import size
 # - Castleing
 # - Win condition
 
-game_types = ["client", "server"]
-
 def run(is_network=False):
+    """
+     if is_network flag is set, uses NetworkGame 
+     and attempts to connect to default server. 
+     otherwise, Game will be used for hotseat 2
+     player game.
+    """
+
     pygame.init()
     screen = pygame.display.set_mode(size)
     if (is_network):
@@ -17,6 +22,8 @@ def run(is_network=False):
     else:
         game = Game(screen)
     game.start()
+
+
 
 if __name__ == "__main__":
     if (len(sys.argv) >= 2):

@@ -16,6 +16,7 @@ class Game():
                 
 
     def start(self):
+        """ start running the game, start pygame main loop """
         self.running = True
         self.board.setup()
         while self.running:
@@ -37,10 +38,12 @@ class Game():
 
 
     def stop(self):
+        """ stop running pygame loop, exit script """
         self.running = False
         sys.exit()
 
     def handle_mouse_down(self, pos):
+        """ handle mouse down at pos x, y """
         tile = self.board.get_tile(pos[0], pos[1])
         # Check if is players turn
         if (tile.piece and tile.piece.player.team == self.going_player.team):
@@ -48,6 +51,7 @@ class Game():
             self.going_player.selected_piece.dragging = True
     
     def handle_mouse_up(self, pos):
+        """ handle mouse up at pos x, y """
         if (not self.going_player.selected_piece):
             return       
         self.going_player.selected_piece.dragging = False
@@ -60,12 +64,14 @@ class Game():
             self.going_player.reset_current_piece()
 
     def handle_mouse_motion(self, pos):
+        """ handle mouse motion at pos x, y """
         if (self.going_player.selected_piece and self.going_player.selected_piece.dragging):
             mouse_x, mouse_y = pos
             self.going_player.selected_piece.x_pos = mouse_x - math.floor(self.board.tile_length / 2)
             self.going_player.selected_piece.y_pos = mouse_y - math.floor(self.board.tile_length / 2)
 
     def render(self):
+        """ render board and pieces to screen """
         self.board.render()
         for piece in self.player1.pieces:
             piece.render()

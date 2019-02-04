@@ -18,6 +18,7 @@ class Server():
 		self.sessions = []
 
 	def start(self):
+		""" start thread to handle incoming connections """
 		self.sock.listen(5)
 		print('Waiting for players...')
 		server = Thread(target=self.handle_incoming_connections)
@@ -26,13 +27,21 @@ class Server():
 		self.stop()
 
 	def stop(self):
+		""" stop server, close socket """
 		self.sock.close()
 
 	def broadcast(self, msg):
+		""" send msg to all connected clients """
 		for client in self.clients:
 			client.send(bytes(msg, 'utf-8'))
 
 	def create_client(self, client):
+		"""
+		 add client to queue. if there are 
+		 enough players in the queue, create 
+		 a Session for next 2 players in queue 
+		 and start that session.
+		 """
 		self.clients.append(client)
 		self.waiting_client_queue.put(client)
 		if (self.waiting_client_queue.qsize() >= 2):
@@ -43,11 +52,13 @@ class Server():
 			self.sessions.append(session)
 
 	def handle_incoming_connections(self):
+		""" accept incoming connections to socket"""
 		while (True):
 			client, client_ip = self.sock.accept()
 			self.create_client(client)
 			
 	def handle_client(self, client):
+		""" recieve messages from client""" 
 		while(True):
 			try:
 				msg = client.recv(32)
@@ -67,7 +78,11 @@ class Session():
 
 
 	def start(self):
-		
+		""" 
+		send command both clients to start game, 
+		create 2 threads to handle communication
+		for each client
+		"""
 		self.client_1.send(bytes(f's|{1}', 'utf-8'))
 		self.client_2.send(bytes(f's|{2}', 'utf-8'))
 	
@@ -75,6 +90,7 @@ class Session():
 		Thread(target=self.handle_client_2, args=(self.client_2,)).start()
 
 	def handle_client_1(self, client_1):
+		""" receive messages from client 1, route messages to client 2 """
 		while(True):
 			try:
 				msg = client_1.recv(32)
@@ -85,6 +101,7 @@ class Session():
 				break
 
 	def handle_client_2(self, client_2):
+		""" recieve messages from client 2, route messages to client 1 """
 		while(True):
 			try:
 				msg = client_2.recv(32)

@@ -9,6 +9,7 @@ class Bishop(Piece):
 
 
     def render(self):
+        
         if (self.player.team == 1):
             self.current_tile.board.screen.blit(bishop_icon_1, (self.x_pos, self.y_pos))
         else:

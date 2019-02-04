@@ -15,8 +15,9 @@ class NetworkGame(Game):
 
 
     def start(self):
-        print('waiting for other player...')
+        """ wait for server to send start msg, start pygame main loop """
 
+        print('waiting for other player...')
         # Wait for game to start
         while(not self.client.last_message):
             pass 
@@ -58,7 +59,10 @@ class NetworkGame(Game):
             self.render()
             pygame.display.flip()
 
+
+
     def handle_move(self):
+        """ handle move described by client's last_message recieved """
         from_x = int(self.client.last_message.split('|')[1])
         from_y = int(self.client.last_message.split('|')[2])
         to_x = int(self.client.last_message.split('|')[3])
@@ -72,27 +76,26 @@ class NetworkGame(Game):
 
 
     def handle_mouse_down(self, pos):
+        """ handle mouse down at pos x, y """
         tile = self.board.get_tile(pos[0], pos[1])
         # Check if is players turn
         if (tile.piece and tile.piece.player.team == self.going_player.team):
-
             # If network game, make sure going_player is running_player
             if (not self.running_player or (self.running_player == self.going_player)):
                 self.going_player.selected_piece = tile.piece
                 self.going_player.selected_piece.dragging = True
     
     def handle_mouse_up(self, pos):
+        """ handle mouse up at pos x, y """
         if (not self.going_player.selected_piece):
             return       
         self.going_player.selected_piece.dragging = False
         mouse_x, mouse_y = pos
         tile = self.board.get_tile(mouse_x, mouse_y)
         if (self.going_player.selected_piece.check_move(tile)):
-
             # Send move to server
             msg = f'm|{self.going_player.selected_piece.x}|{self.going_player.selected_piece.y}|{tile.x}|{tile.y}'
             self.client.send(msg)
-
             self.going_player.move_piece(tile)
             self.going_player = self.player1 if self.going_player.team == 2 else self.player2
 
